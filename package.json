@@ -7,16 +7,17 @@
     "test": "node test.js",
     "start": "gulp"
   },
+  git@github.com:artizani/Genesis-Audio.git
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/danielstern/integration-test-repo.git"
+    "url": "git+https://github.com:artizani/Genesis-Audio.git"
   },
   "author": "daniel j stern",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/danielstern/integration-test-repo/issues"
+    "url": "https://github.com:artizani/Genesis-Audio.git/issues"
   },
-  "homepage": "https://github.com/danielstern/integration-test-repo#readme",
+  "homepage": "https://github.com:artizani/Genesis-Audio.git#readme",
   "dependencies": {
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
