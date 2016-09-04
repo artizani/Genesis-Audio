@@ -7,7 +7,6 @@
     "test": "node test.js",
     "start": "gulp"
   },
-  git@github.com:artizani/Genesis-Audio.git
   "repository": {
     "type": "git",
     "url": "git+https://github.com:artizani/Genesis-Audio.git"
