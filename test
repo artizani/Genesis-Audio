@@ -1,0 +1,110 @@
+package com.sample.wiredrest;
+
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.response.Header;
+import com.jayway.restassured.response.Response;
+import org.apache.http.client.HttpResponseException;
+import org.hamcrest.collection.IsCollectionWithSize;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.io.ByteArrayOutputStream;
+import java.util.UUID;
+
+import static com.jayway.restassured.RestAssured.expect;
+import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.http.ContentType.JSON;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
+
+public class JSampleTest {
+
+      /*  @Rule
+        public WireMockRule wireMockRule = new WireMockRule(18089);*/
+
+
+
+        @Before
+        public void init() {
+
+        /*    stubFor(get(urlEqualTo("/hoge.txt")).willReturn(
+                    aResponse().withStatus(200).withHeader("Content-Type", "text/plain").withBody("hoge")));
+            stubFor(get(urlEqualTo("/500.txt")).willReturn(
+                    aResponse().withStatus(500).withHeader("Content-Type", "text/plain").withBody("hoge")));
+            stubFor(get(urlEqualTo("/503.txt")).willReturn(
+                    aResponse().withStatus(503).withHeader("Content-Type", "text/plain").withBody("hoge")));*/
+        }
+
+        @Test
+        public void ok() throws Exception {
+            String actual = "olu";
+            String expected = "hoge";
+            assertThat(actual, is(expected));
+        }
+
+        @Test(expected = HttpResponseException.class)
+        public void notFound() throws Exception {
+
+        }
+
+        @Test
+        public void internalServerError() throws Exception {
+            RestAssured.baseURI = "https://jsonplaceholder.typicode.com";
+            RestAssured.basePath = "/";
+            given().log().all()
+                    .accept(JSON).expect().statusCode(200)
+                    .when().log().all()
+                    .get("users")
+                    .then().log().all()
+                    .body("id",
+                            IsCollectionWithSize.hasSize(10))
+                    .body("findAll {it.name == 'Leanne Graham'}.props",
+                    IsCollectionWithSize.hasSize(1))
+                    .body("findAll {it.username == 'Antonette'}.props",
+                            IsCollectionWithSize.hasSize(1))
+                    .body("id.findall.size()",equalTo(10));
+
+            RestAssured.get("users").then().assertThat()
+                    .body("size()", is(10));
+
+          
+
+       /*     List<String> rideStates = RestAssured.when().get("/users").then().extract().response().path("id");
+            for (String rideState : rideStates)
+            {
+                assertThat(rideState, equalTo("open"));
+            }*/
+            expect().body("findall.size()",equalTo(10)).when().get("users");
+        }
+
+        @Test
+        public void serviceUnavailable() throws Exception {
+
+         Response res =   boot();
+
+        // ArrayList<Map<String,?>> jsonAsArrayList = from res.asString().get("");
+
+        }
+
+
+        private Response boot(){
+
+            RestAssured.baseURI = "https://jsonplaceholder.typicode.com";
+            RestAssured.basePath = "/";
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+            return given()
+                    .header("Olu", UUID.randomUUID())
+                    .header(new Header("header", "oluheader"))
+                    .expect()
+                    .statusCode(200)
+                    .when()
+                    .get("users");
+
+
+
+        }
+
+}
+
